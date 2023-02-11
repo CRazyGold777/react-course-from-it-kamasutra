@@ -10,6 +10,9 @@
 	align-items: center;
 	flex-direction: column;
 }
+.form>div{
+	margin-bottom: 10px;
+}
 .button{
 	padding: 5px 15px;
 	background: #fff;
@@ -25,4 +28,8 @@
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
+}
+.form>div>div{
+	color: red;
+	text-align: center;
 }

@@ -1,8 +1,8 @@
-import { stopSubmit } from "redux-form";
 import { authAPI } from "../api/api";
 
 const SET_AUTH = 'SET-AUTH';
 const IS_AUTH = 'IS_AUTH';
+const ERROR_FROM_SERVER = 'ERROR_FROM_SERVER';
 
 let initialState = {
 	messages: [],
@@ -11,7 +11,8 @@ let initialState = {
 		email: null,
 		login: null
 	},
-	isAuth: false
+	isAuth: false,
+	error: null
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -28,15 +29,22 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				isAuth: action.toggleAuth,
 			}
+		case ERROR_FROM_SERVER:
+			return {
+				...state,
+				error: action.error
+			}
 
 		default:
 			return state;
 	}
 }
 
-export const setAuth = (auth) => ({ type: SET_AUTH, auth })
+const setAuth = (auth) => ({ type: SET_AUTH, auth })
 
-export const toggleAuth = (toggleAuth) => ({ type: IS_AUTH, toggleAuth })
+const toggleAuth = (toggleAuth) => ({ type: IS_AUTH, toggleAuth })
+
+const infoAboutError = (error) => ({ type: ERROR_FROM_SERVER, error })
 
 export const setAuthThunkCreator = () => (dispatch) => {
 	return authAPI.getMe()
@@ -53,9 +61,10 @@ export const loginTC = (email, password, rememberMe) => (dispatch) => {
 		.then(responce => {
 			if (responce.data.resultCode === 0) {
 				dispatch(setAuthThunkCreator())
+				dispatch(infoAboutError(null))
 			} else {
 				const message = responce.data.messages.length > 0 ? responce.data.messages[0] : "Some error"
-				dispatch(stopSubmit("login", { _error: message }))
+				dispatch(infoAboutError(message))
 			}
 		})
 }
