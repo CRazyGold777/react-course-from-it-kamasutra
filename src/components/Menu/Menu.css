@@ -1,0 +1,14 @@
+.menu {
+	padding: 15px;
+}
+.menu__items {
+	font-size: 30px;
+	color: #fff;
+}
+.menu__item:last-child{
+	margin-top: 20px;
+}
+
+.menu__item a.active{
+	color: gold;
+}

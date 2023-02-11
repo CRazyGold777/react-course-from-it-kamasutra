@@ -1,0 +1,21 @@
+.form-post form {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	/* justify-content: end; */
+}
+.form-post div:first-child{
+	width: 100%;
+}
+.form-post__button {
+	font-size: 18px;
+	padding: 15px;
+	border-radius: 10px;
+	transition: all 0.4s;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.534);
+}
+.form-post__button:hover{
+	color: green;
+	box-shadow: 0 0 7px #000;
+}

@@ -1,0 +1,32 @@
+@import "./css/NullCss.css";
+@import "./css/FormPost.css";
+.wrapper {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+	min-height: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: 60px 1fr 60px;
+	grid-gap: 20px;
+	background: rgba(0, 0, 0, 0.247);
+}
+.wrapper__header,.wrapper__nav,.wrapper__footer{
+	background: rgba(126, 248, 101, 0.562);
+	box-shadow: 0 0 3px #000;
+}
+.wrapper__content{
+	box-shadow: 0 0 3px #000;
+}
+.wrapper__header {
+	grid-column: 1/5;
+}
+.wrapper__nav {
+}
+.wrapper__content {
+	grid-column: 2/5;
+}
+.wrapper__footer{
+	grid-column: 1/5;
+}
+

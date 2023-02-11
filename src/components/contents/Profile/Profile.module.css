@@ -1,0 +1,10 @@
+.profile {
+	height: 100%;
+}
+.profile__img {
+	max-height: 300px;
+	width: 100%;
+}
+.profile__person,.profile__old-posts,.profile__new-post,.profile__status {
+	padding: 30px;
+}

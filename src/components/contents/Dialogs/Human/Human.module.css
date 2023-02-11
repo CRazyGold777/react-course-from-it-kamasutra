@@ -1,0 +1,9 @@
+.human{
+	display: block;
+}
+.human:not(:last-child){
+	margin-bottom: 20px;
+}
+.active{
+	font-size: 25px;
+}
