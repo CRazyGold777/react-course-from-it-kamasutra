@@ -2,7 +2,6 @@
 import c from "./Login.module.css"
 import { connect } from 'react-redux';
 import { loginTC } from "../../redux/authReducer";
-import { Input } from "../common/FormsControls/FormsControls"
 import { Error } from "../common/Error/Error";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -33,9 +32,7 @@ const validator = values => {
 		errors.email = 'Required';
 	} else if (
 		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-	) {
-		errors.email = 'Invalid email address';
-	}
+	) { errors.email = 'Invalid email address'; }
 	else if (!values.password) {
 		errors.password = 'Required';
 	}
@@ -76,38 +73,3 @@ const LoginForm = (props) => {
 		</Formik>
 	)
 }
-
-
-// const LoginForm = (props) => {
-// 	return (
-// 		<form onSubmit={props.handleSubmit} className={c.form}>
-// 			<div>
-// 				<Field name="login"
-// 					placeholder="Login"
-// 					component={Input}
-// 					validate={[required]} />
-// 			</div>
-// 			<div>
-// 				<Field name="password"
-// 					placeholder="Password"
-// 					component={Input}
-// 					validate={[required]} />
-// 			</div>
-// 			<div className={c.checkbox}>
-// 				<Field name="remember_me"
-// 					type="checkbox"
-// 					component="input" />
-// 				<span>Remember me</span>
-// 			</div>
-// 			{props.error && <Error error={props.error} />}
-// 			<div>
-// 				<button className={c.button}>Login</button>
-// 			</div>
-// 		</form>
-// 	)
-// }
-
-// const LoginReduxForm = reduxForm({
-// 	form: 'login'
-// })(LoginForm)
-

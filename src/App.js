@@ -1,9 +1,9 @@
 import './App.css';
 import Footer from './components/Footer/Footer';
 import Menu from './components/Menu/Menu'
-// import DialogsContainer from './components/contents/Dialogs/DialogsContainer';
+import DialogsContainer from './components/contents/Dialogs/DialogsContainer';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-// import { ProfileContainer } from './components/contents/Profile/ProfileContainer';
+import { ProfileContainer } from './components/contents/Profile/ProfileContainer';
 import { UsersContainer } from './components/contents/Users/UsersContainer';
 import { HeaderContainer } from './components/Header/HeaderContainer';
 import { Login } from './components/Login/Login';
@@ -33,17 +33,17 @@ class App extends React.Component {
 					<div className='wrapper__content'>
 						<Routes>
 							<Route path='/' element={<></>} />
-							{/* <Route path='/profile' element={
+							<Route path='/profile' element={
 								<ProfileContainer me={true} />
-							} /> */}
-							{/* <Route path='/profile/:userId' element={<ProfileContainer />} />
+							} />
+							<Route path='/profile/:userId' element={<ProfileContainer />} />
 
 							<Route path='/dialogs/' element={
 								<DialogsContainer />
 							} />
 							<Route path='/dialogs/:userId' element={
 								<DialogsContainer />
-							} /> */}
+							} />
 							<Route path='/users/' element={
 								<UsersContainer />
 							} />

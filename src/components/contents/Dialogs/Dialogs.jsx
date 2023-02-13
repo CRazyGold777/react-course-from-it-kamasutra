@@ -2,7 +2,7 @@ import s from './Dialogs.module.css'
 import Message from './Message/Message.jsx'
 import Human from './Human/Human'
 import React from 'react';
-import NewMessageContainer from './NewMessage/NewMessageContainer';
+import NewMessage from './NewMessage/NewMessage';
 
 
 function Dialogs(props) {
@@ -19,11 +19,11 @@ function Dialogs(props) {
 				</div>
 			</div>
 			<div className={s.messages}>
-				<div>
+				<div className={s.message}>
 					{message}
 				</div>
 				<div className={s.new_message}>
-					<NewMessageContainer />
+					<NewMessage />
 				</div>
 			</div>
 		</div>
