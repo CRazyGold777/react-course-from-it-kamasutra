@@ -11,14 +11,16 @@ import { Preloader } from "../../common/Preloader/Preloader";
 import { AuthRedirect } from '../../../hoc/AuthRedirect';
 import { compose } from 'redux';
 import { useParams } from 'react-router-dom';
+import { getProfile, isProfilePageFetching, getProfilePosts, getProfileStatus } from '../../../selectors/selector-profile';
+import { isAuthMe } from '../../../selectors/selector-auth';
 
 const mapStateToProps = (state) => {
 	return {
-		isFetching: state.profilePage.isFetching,
-		myPosts: state.profilePage.myPosts,
-		profile: state.profilePage.profile,
-		status: state.profilePage.status,
-		authMe: state.auth.data.id,
+		isFetching: isProfilePageFetching(state),
+		myPosts: getProfilePosts(state),
+		profile: getProfile(state),
+		status: getProfileStatus(state),
+		authMe: isAuthMe(state),
 	}
 }
 

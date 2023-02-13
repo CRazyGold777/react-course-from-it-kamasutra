@@ -7,15 +7,16 @@ import {
 import React from "react";
 import { Users } from "./Users";
 import { Preloader } from "../../common/Preloader/Preloader";
+import { getCurrentPage, getPageSize, getTotalUsersCount, getUsers, isFollowingButtonDisable, isUsersPageFetching } from "../../../selectors/selector-users";
 
 let mapStateToProps = (state) => {
 	return {
-		users: state.usersPage.users,
-		pageSize: state.usersPage.pageSize,
-		totalUsersCount: state.usersPage.totalUsersCount,
-		currentPage: state.usersPage.currentPage,
-		isFetching: state.usersPage.isFetching,
-		isFollowing: state.usersPage.isFollowing,
+		users: getUsers(state),
+		pageSize: getPageSize(state),
+		totalUsersCount: getTotalUsersCount(state),
+		currentPage: getCurrentPage(state),
+		isFetching: isUsersPageFetching(state),
+		isFollowing: isFollowingButtonDisable(state),
 	}
 }
 
