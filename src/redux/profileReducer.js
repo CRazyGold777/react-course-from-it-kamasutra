@@ -17,7 +17,7 @@ let initialState = {
 		{ id: 1, post: "Hi, how are you?" },
 		{ id: 2, post: "It is my first post" },
 	],
-	status: "---",
+	status: "---qweqwe",
 }
 
 export const profileReducer = (state = initialState, action) => {

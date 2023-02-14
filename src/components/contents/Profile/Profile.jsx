@@ -3,6 +3,7 @@ import Person from './Person/Person';
 import Post from './Post/Post';
 import NewPostContainer from './NewPost/NewPostContainer';
 import { ProfileStatus } from './ProfileStatus/ProfileStatus';
+import { ProfileStatusWithHocks } from './ProfileStatus/ProfileStatusWithHocks';
 
 function Profile(props) {
 	let postsJsx = props.myPosts.map(p => <Post id={p.id} message={p.post} />)
@@ -14,7 +15,7 @@ function Profile(props) {
 				<Person profile={props.profile} />
 			</div>
 			<div className={s.profile__status}>
-				<ProfileStatus status={props.status} putStatusProfileTC={props.putStatusProfileTC} />
+				<ProfileStatusWithHocks status={props.status} putStatusProfileTC={props.putStatusProfileTC} />
 			</div>
 			<div className={s['profile__new-post']}>
 				<NewPostContainer />
