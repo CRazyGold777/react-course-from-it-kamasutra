@@ -1,9 +1,10 @@
 import { profileAPI } from "../api/api";
 
-const ADD_POST = 'ADD-POST';
-const SET_PROFILE = 'SET-PROFILE';
-const FETCHING = 'FETCHING';
-const UPDATE_STATUS = "UPDATE_STATUS";
+const ADD_POST = 'profile/ADD-POST';
+const SET_PROFILE = 'profile/SET-PROFILE';
+const FETCHING = 'profile/FETCHING';
+const UPDATE_STATUS = "profile/UPDATE_STATUS";
+const DELETE_POST = "profile/DELETE_POST";
 
 let initialState = {
 	isFetching: true,
@@ -36,12 +37,21 @@ export const profileReducer = (state = initialState, action) => {
 			return { ...state, isFetching: action.isFetching }
 		case UPDATE_STATUS:
 			return { ...state, status: action.status }
+		case DELETE_POST:
+			return {
+				...state,
+				myPosts: state.myPosts.filter(el => {
+					return el.id !== action.id
+				})
+			}
 		default:
 			return state;
 	}
 }
 
-const addPost = (message) => ({ type: ADD_POST, message })
+export const addPost = (message) => ({ type: ADD_POST, message })
+
+export const deletePost = (id) => ({ type: DELETE_POST, id })
 
 export const setProfile = (profile) => ({ type: SET_PROFILE, profile, })
 
@@ -49,24 +59,22 @@ export const updateFetching = (isFetching) => ({ type: FETCHING, isFetching })
 
 const updateStatus = (status) => ({ type: UPDATE_STATUS, status })
 
-export const setProfileThunkCreator = (id) => (dispatch) => {
-	profileAPI.getUser(id)
-		.then(data => {
-			dispatch(setProfile(data))
-			dispatch(updateFetching(false))
-		})
-	profileAPI.getStatus(id)
-		.then(data => {
-			if (data === null) dispatch(updateStatus("Empty"));
-			else dispatch(updateStatus(data))
-		})
+export const setProfileThunkCreator = (id) => async (dispatch) => {
+	let user = await profileAPI.getUser(id);
+
+	dispatch(setProfile(user))
+	dispatch(updateFetching(false))
+
+	let status = await profileAPI.getStatus(id)
+
+	if (status === null) dispatch(updateStatus("Empty"));
+	else dispatch(updateStatus(status))
 }
 
-export const putStatusProfileTC = (status) => (dispatch) => {
-	profileAPI.updateStatus(status)
-		.then(responce => {
-			if (responce.data.resultCode === 0) dispatch(updateStatus(status))
-		})
+export const putStatusProfileTC = (status) => async (dispatch) => {
+	let responce = await profileAPI.updateStatus(status);
+
+	if (responce.data.resultCode === 0) dispatch(updateStatus(status))
 }
 
 export const addPostTC = (message) => (dispatch) => {

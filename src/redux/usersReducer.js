@@ -1,11 +1,11 @@
 import { usersAPI } from "../api/api";
 
-const FOLLOW = 'FOLLOW';
-const SET_USERS = 'SET-USERS';
-const CURRENT_PAGE = 'CURRENT-PAGE'
-const TOTAL_COUNT = 'TOTAL-COUNT'
-const FETCHING = 'FETCHING'
-const IS_FOLLOWING = 'IS_FOLLOWING'
+const FOLLOW = 'users/FOLLOW';
+const SET_USERS = 'users/SET-USERS';
+const CURRENT_PAGE = 'users/CURRENT-PAGE'
+const TOTAL_COUNT = 'users/TOTAL-COUNT'
+const FETCHING = 'users/FETCHING'
+const IS_FOLLOWING = 'users/IS_FOLLOWING'
 
 
 let initialState = {
@@ -59,44 +59,42 @@ export const updateFetching = (isFetching) => ({ type: FETCHING, isFetching })
 export const updateFollowing = (isFollowing) => ({ type: IS_FOLLOWING, isFollowing })
 
 
-export const toggleFollowThunkCreator = (u) => (dispatch) => {
+export const toggleFollowThunkCreator = (u) => async (dispatch) => {
 	dispatch(updateFollowing(true));
 	if (u.followed) {
-		usersAPI.unfollow(u.id).then(resultCode => {
-			if (resultCode === 0) {
-				dispatch(updateFollow(u.id));
-				dispatch(updateFollowing(false));
-			}
-		})
+		let resultCode = await usersAPI.unfollow(u.id);
+
+		if (resultCode === 0) {
+			dispatch(updateFollow(u.id));
+			dispatch(updateFollowing(false));
+		}
 	}
 	else {
-		usersAPI.follow(u.id).then(resultCode => {
-			if (resultCode === 0) {
-				dispatch(updateFollow(u.id));
-				dispatch(updateFollowing(false));
-			}
-		})
+		let resultCode = await usersAPI.follow(u.id)
+
+		if (resultCode === 0) {
+			dispatch(updateFollow(u.id));
+			dispatch(updateFollowing(false));
+		}
 	}
 }
 
-export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
 	dispatch(updateFetching(true))
-	usersAPI.getUsers(currentPage, pageSize)
-		.then(responce => {
-			dispatch(updateFetching(false))
-			dispatch(setUsers(responce.items))
-			dispatch(setTotalUsersCount(responce.totalCount))
-		})
+	let responce = await usersAPI.getUsers(currentPage, pageSize)
+
+	dispatch(updateFetching(false))
+	dispatch(setUsers(responce.items))
+	dispatch(setTotalUsersCount(responce.totalCount))
 }
 
-export const updateUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+export const updateUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
 	dispatch(updateCurrentPage(currentPage))
 	dispatch(updateFetching(true))
-	usersAPI.getUsers(currentPage, pageSize)
-		.then(responce => {
-			dispatch(updateFetching(false))
-			dispatch(setUsers(responce.items))
-		})
+	let responce = await usersAPI.getUsers(currentPage, pageSize)
+
+	dispatch(updateFetching(false))
+	dispatch(setUsers(responce.items))
 }
 
 

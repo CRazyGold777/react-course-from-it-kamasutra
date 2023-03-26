@@ -1,8 +1,8 @@
 import { authAPI } from "../api/api";
 
-const SET_AUTH = 'SET-AUTH';
-const IS_AUTH = 'IS_AUTH';
-const ERROR_FROM_SERVER = 'ERROR_FROM_SERVER';
+const SET_AUTH = 'auth/SET-AUTH';
+const IS_AUTH = 'auth/IS_AUTH';
+const ERROR_FROM_SERVER = 'auth/ERROR_FROM_SERVER';
 
 let initialState = {
 	messages: [],
@@ -46,35 +46,32 @@ const toggleAuth = (toggleAuth) => ({ type: IS_AUTH, toggleAuth })
 
 const infoAboutError = (error) => ({ type: ERROR_FROM_SERVER, error })
 
-export const setAuthThunkCreator = () => (dispatch) => {
-	return authAPI.getMe()
-		.then(data => {
-			if (data.resultCode === 0) {
-				dispatch(setAuth(data))
-				dispatch(toggleAuth(true))
-			}
-		})
+export const setAuthThunkCreator = () => async (dispatch) => {
+	let data = await authAPI.getMe()
+
+	if (data.resultCode === 0) {
+		dispatch(setAuth(data))
+		dispatch(toggleAuth(true))
+	}
 }
 
-export const loginTC = (email, password, rememberMe) => (dispatch) => {
-	authAPI.login(email, password, rememberMe)
-		.then(responce => {
-			if (responce.data.resultCode === 0) {
-				dispatch(setAuthThunkCreator())
-				dispatch(infoAboutError(null))
-			} else {
-				const message = responce.data.messages.length > 0 ? responce.data.messages[0] : "Some error"
-				dispatch(infoAboutError(message))
-			}
-		})
+export const loginTC = (email, password, rememberMe) => async (dispatch) => {
+	let responce = await authAPI.login(email, password, rememberMe)
+
+	if (responce.data.resultCode === 0) {
+		dispatch(setAuthThunkCreator())
+		dispatch(infoAboutError(null))
+	} else {
+		const message = responce.data.messages.length > 0 ? responce.data.messages[0] : "Some error"
+		dispatch(infoAboutError(message))
+	}
 }
 
-export const logOutTC = () => (dispatch) => {
-	authAPI.logOut()
-		.then(responce => {
-			if (responce.data.resultCode === 0) {
-				dispatch(setAuth({ id: null, email: null, login: null }));
-				dispatch(toggleAuth(false))
-			}
-		})
+export const logOutTC = () => async (dispatch) => {
+	let responce = await authAPI.logOut()
+
+	if (responce.data.resultCode === 0) {
+		dispatch(setAuth({ id: null, email: null, login: null }));
+		dispatch(toggleAuth(false))
+	}
 }
