@@ -61,21 +61,16 @@ export const updateFollowing = (isFollowing) => ({ type: IS_FOLLOWING, isFollowi
 
 export const toggleFollowThunkCreator = (u) => async (dispatch) => {
 	dispatch(updateFollowing(true));
+	let resultCode;
 	if (u.followed) {
-		let resultCode = await usersAPI.unfollow(u.id);
-
-		if (resultCode === 0) {
-			dispatch(updateFollow(u.id));
-			dispatch(updateFollowing(false));
-		}
+		resultCode = await usersAPI.unfollow(u.id);
 	}
 	else {
-		let resultCode = await usersAPI.follow(u.id)
-
-		if (resultCode === 0) {
-			dispatch(updateFollow(u.id));
-			dispatch(updateFollowing(false));
-		}
+		resultCode = await usersAPI.follow(u.id)
+	}
+	if (resultCode === 0) {
+		dispatch(updateFollow(u.id));
+		dispatch(updateFollowing(false));
 	}
 }
 

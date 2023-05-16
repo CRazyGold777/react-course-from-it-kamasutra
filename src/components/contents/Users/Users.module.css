@@ -21,7 +21,7 @@
 }
 .user__action {
 	display: flex;
-	flex: 0 0 12%;
+	flex: 0 0 15%;
 	flex-direction: column;
 	margin-right: 15px;
 }
@@ -37,14 +37,15 @@
 	border: 1px solid #000;
 	border-radius: 10px;
 	background: rgba(126, 248, 101, 0.562);
-	padding: 5px;
-	font-size: 20px;
+	font-size: 18px;
+	padding: 5px 0;
 	transition: all 0.5s;
 }
 .user__follow:hover{
 	background: rgba(35, 126, 55, 0.281);
 }
 .user__info {
+	font-size: 18px;
 	width: 100%;
 	box-shadow: 0 0 5px #000;
 	border-radius: 15px;
@@ -58,7 +59,7 @@
 	justify-content: space-between;
 }
 .user__name {
-	font-size: 28px;
+	font-size: 24px;
 }
 .user__country, .user__city {
 	font-size: 20px;
